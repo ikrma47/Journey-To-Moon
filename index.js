@@ -14,30 +14,23 @@ function journeyToMoon(n, astronaut) {
 }
 
 
-function getUniqueSet(arr){
-    let common = []
-
-    while(arr.length){
-        let tuple = arr.pop()
+function getUniqueSet(as){
+    let res = []
+    while(as.length){
+        let tuple = new Set(as.pop())
         
-        if(common.length === 0) common.push(tuple)
-        else {
-            let found = false
-            for(let i = 0; i < common.length; i++){
-                if(common[i].includes(tuple[0])){
-                    common[i].push(tuple[1])
-                    found = true
-                }
-                else if(common[i].includes(tuple[1])){
-                    common[i].push(tuple[0])
-                    found = true
+        for(let i of tuple){
+            for(let j = 0; j < as.length; j++){
+                if(as[j].includes(i)){
+                    as[j].forEach(v => tuple.add(v))
+                    as.splice(j, 1)
+                    j--
                 }
             }
-            
-            if(!found) common.push(tuple)
         }
+        res.push(Array.from(tuple))
     }
-    return common
+    return res
 }
 
 function fillMissing(arr, n){
