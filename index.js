@@ -9,7 +9,7 @@
 
 // actual function
 function journeyToMoon(n, astronaut) {
-    return generatePossibleSets(fillMissing(getUniqueSet(astronaut), n)).length
+    return generatePossibleSets(fillMissing(getUniqueSet(astronaut), n))
     
 }
 
@@ -34,10 +34,11 @@ function getUniqueSet(as){
 }
 
 function fillMissing(arr, n){
-    if(n < arr.length * 2){
+    let flattend = arr.flat()
+    if(n <= flattend ){
         return arr
     } else {
-        let flattend = arr.flat()
+        
         let astros = []
         for( let i = 0; i < n; i++){
             if(!flattend.includes(i))
@@ -50,15 +51,11 @@ function fillMissing(arr, n){
 }
 
 function generatePossibleSets(t){
-    let result = []
+    let sum = 0
     for(let i = 0; i< t.length -1; i++){
-        for(let j = 0; j< t[i].length; j++){
-            for(let k = i+1; k < t.length; k++){
-                for(let l = 0; l < t[k].length; l++){
-                    result.push([t[i][j], t[k][l]])
-                }
-            }
+        for(let k = i+1; k < t.length; k++){
+            sum += (t[i].length * t[k].length)
         }
     }
-    return result
+    return sum
 }
